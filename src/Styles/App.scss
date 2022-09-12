@@ -1,40 +1,147 @@
 @use 'variables.scss';
 
-.App {
-  text-align: center;
+/* https://meyerweb.com/eric/tools/css/reset/ v2.0 | 20110126 License: none (public domain)*/a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,output,p,pre,q,ruby,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video{margin:0;padding:0;border:0;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:'';content:none}table{border-collapse:collapse;border-spacing:0}
+*{box-sizing: border-box; margin: 0; padding: 0;}
+
+/*Above is my default quick CSS reset I always use, doesn't really matter for this example though, you can delete it.*/
+
+
+
+body{
+	background-color: ghostwhite;
+	font-family: sans-serif;
+	font-size: 33px;
+	line-height: 40px;
+	letter-spacing: 2px;
+	padding: 50px;
+	color: #444;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+/*Center the weird text*/
+#text{
+	max-width: 500px;
+	display: block;
+	margin: 100px auto 20px auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/*Just the CSS for the quote citation*/
+#author{
+	max-width: 500px;
+	display: block;
+	margin: 0 auto;
+	text-align: right;
+	opacity: .4;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/*all spans have to be block or inline block to transform*/
+#text span{
+	display: inline-block;
 }
 
-.App-link {
-  color: #61dafb;
+/*When JS finds a space, it replaces it with a span with .space class*/
+/*I did this so you can do stuff with the spaces if you want.*/
+.space{
+	width: 15px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+/*These classes are added to each letter/span using JS so they animate*/
+.effect1{
+	animation: zoom 6s linear infinite;
+	-webkit-animation: zoom 6s linear infinite;
+}
+.effect2{
+	animation: bounce 3s linear infinite;
+	-webkit-animation: bounce 3s linear infinite;
+}
+.effect3{
+	animation: squash 2s linear infinite;
+	-webkit-animation: squash 2s linear infinite;	
+}
+.effect4{
+	animation: rot 5s linear infinite;
+	-webkit-animation: rot 5s linear infinite;
+}
+.effect5{
+	animation: fade2 4s linear infinite;
+	-webkit-animation: fade2 4s linear infinite;
+}
+
+
+
+
+/*Here's a bunch of animations*/
+
+@keyframes zoom{
+	0%{transform: scale(1);}
+	50%{transform: scale(1.1);}
+	100%{transform: scale(1);}
+}
+@-webkit-keyframes zoom{
+	0%{-webkit-transform: scale(1);}
+	50%{-webkit-transform: scale(1.1);}
+	100%{-webkit-transform: scale(1);}
+}
+
+@keyframes bounce{
+	0%{transform: translateY(0px);}
+	50%{transform: translateY(1px);}
+	100%{transform: translateY(0px);}
+}
+@-webkit-keyframes bounce{
+	0%{-webkit-transform: translateY(0px);}
+	50%{-webkit-transform: translateY(1px);}
+	100%{-webkit-transform: translateY(0px);}
+}
+
+@keyframes squash{
+	0%{transform:scale(1,1);}
+	50%{transform:scale(1,1.2);}
+	100%{transform:scale(1,1);}
+}
+@-webkit-keyframes squash{
+	0%{-webkit-transform:scale(1,1);}
+	50%{-webkit-transform:scale(1,1.2);}
+	100%{-webkit-transform:scale(1,1);}
+}
+
+@keyframes rot{
+	0%{transform: rotate(9deg);}
+	50%{transform: rotate(-9deg);}
+	100%{transform: rotate(9deg);}
+}
+@-webkit-keyframes rot{
+	0%{-webkit-transform: rotate(9deg);}
+	50%{-webkit-transform: rotate(-9deg);}
+	100%{-webkit-transform: rotate(9deg);}
+}
+
+@keyframes fade2{
+	0%{
+		transform: scale(.8);
+		opacity: .7;
+	}
+	50%{
+		transform: scale(1);
+		opacity: 1;
+	}
+	100%{
+		transform: scale(.8);
+		opacity: .7;
+	}
+}
+@-webkit-keyframes fade2{
+	0%{
+		-webkit-transform: scale(.8);
+		opacity: .7;
+	}
+	50%{
+		-webkit-transform: scale(1);
+		opacity: 1;
+	}
+	100%{
+		-webkit-transform: scale(.8);
+		opacity: .7;
+	}
 }

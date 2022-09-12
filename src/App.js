@@ -6,8 +6,60 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {brands} from '@fortawesome/fontawesome-svg-core/import.macro'
 import $ from 'jquery';
 
+
 //// redux toolkit (I am using Redux toolkit because: "createStore is deprecated")
 import { createSlice, configureStore } from '@reduxjs/toolkit';
+
+
+//requires jQuery because I am lazy.
+
+
+$(document).ready(function(){
+	setup();
+});
+
+
+function setup(){
+	
+	var $passage = $('#text');
+	
+	//get the inner HTML of the #weirdtext paragraph
+	var rawtxt = $passage.html();
+	
+	//Get the length of the string for use in loop
+	var len = rawtxt.length;
+	
+	//empty string used to store final text that includes spans
+	var newtext = '';
+
+	
+	//For each character inside #weirdtext string (this is why we got length)
+	for(var i = 0; i < len; i ++){
+		
+		//get a random num between 1 and 5
+		var rng = Math.floor(Math.random() * 5) + 1;
+		
+		//get the i-th character from the string
+		var currentchar = rawtxt.charAt(i);
+		if(currentchar === ' '){
+			//if it's a space, add an empty .space span
+			var newchar = '<span class="space"></span>';
+		}
+		else{
+			//otherwise, wrap it with a span, and give it class effectN, where N is a random int as before
+			var newchar = '<span class="effect' + rng + '">' + currentchar + '</span>';
+		}
+		//add this new "char" (actually it's a char with spans wrapping it) to the empty string
+		newtext = newtext + newchar;
+	}
+	
+	//replace #weirdtext paragraphs inner HTML with the newly created string
+	$passage.html(newtext);
+	
+}
+
+
+
 
 const twitterIcon = <FontAwesomeIcon icon={brands('twitter')} />
 
@@ -24,7 +76,7 @@ const proxFrase = createSlice({
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
-      state.value = Math.floor(Math.random() * 3)
+      state.value = Math.floor(Math.random() * state.frases.length)
       //console.log(`state.value: ${state.value}`)
     },
   }
@@ -70,11 +122,13 @@ class MaquinaAleatoria extends React.Component {
   //Renderización
   render() {
     return (
-       <div style={{backgroundColor:this.props.colores[this.props.value-1]}} class='container-fluid text-center well' id="quote-box">
+      <div className='container-fluid'>
+       <div style={{backgroundColor:this.props.colores[this.props.value-1]}} className='textbox text-center well' id="quote-box">
         <h1 style={{color:this.props.colores[this.props.value]}} id="text">{this.props.frases[this.props.value].frase}</h1>
         <h2 id="author">{this.props.frases[this.props.value].autor}</h2>
-        <button class='btn btn-block btn-primary' id="new-quote" type='Submit' onClick={this.pulsador}>Submit</button>
-        <a class='btn btn-link' target="_blank" href="twitter.com/intent/tweet" id="tweet-quote">{twitterIcon}Tuitear la frase</a>
+        <button className='btn btn-block btn-primary' id="new-quote" type='Submit' onClick={this.pulsador}>Submit</button>
+        <a className='btn btn-link' target="_blank" href="twitter.com/intent/tweet" id="tweet-quote">{twitterIcon}Tuitear la frase</a>
+       </div>
        </div>
     );
   }
