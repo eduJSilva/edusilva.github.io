@@ -145,3 +145,27 @@ body{
 		opacity: .7;
 	}
 }
+
+
+
+
+.color-box {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: sans-serif;
+	font-weight: 600;
+	font-size: 2em;
+	text-align: center;
+	min-width: 320px;
+	max-width: 960px;
+	width: calc(100% - 50px);
+	height: 100px;
+	margin: 10px 25px;
+	border: 1px solid gray;
+  }
+  
+  #text::first-letter {
+	font-size: 200%;
+	font-style: italic;
+  }

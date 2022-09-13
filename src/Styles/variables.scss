@@ -3,3 +3,15 @@ $colors: (color1: blue, color2: red, color3: green);
 @each $key, $color in $colors {
   .#{$color}-text {color: $color;}
 }
+
+$theme-colors: (
+  "primary":    $primary,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark
+);
+

@@ -10,15 +10,7 @@ import $ from 'jquery';
 //// redux toolkit (I am using Redux toolkit because: "createStore is deprecated")
 import { createSlice, configureStore } from '@reduxjs/toolkit';
 
-
-//requires jQuery because I am lazy.
-
-
-$(document).ready(function(){
-	setup();
-});
-
-
+/*
 function setup(){
 	
 	var $passage = $('#text');
@@ -57,18 +49,48 @@ function setup(){
 	$passage.html(newtext);
 	
 }
+*/
 
-
-
+// ** Colour Contrast Calculator ** //
+// ** https://www.w3.org/TR/AERT#color-contrast ** //
+// ** ((Red value X 299) + (Green value X 587) + (Blue value X 114)) / 1000 ** // 
+let coloresS=()=>{
+  for(var i = 0; i < 100; i++){
+ // Get element
+  var el = document.getElementById("quote-box");
+ // Generate random RGB values
+  var r = Math.floor((Math.random() * 256) - 1);
+  var g = Math.floor((Math.random() * 256) - 1);
+  var b = Math.floor((Math.random() * 256) - 1);
+  console.log(r, g, b);
+ // Calculate brightness of randomized colour
+ var brightness = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+ // Calculate brightness of white and black text
+ var lightText = ((255 * 299) + (255 * 587) + (255 * 114)) / 1000;
+ var darkText = ((0 * 299) + (0 * 587) + (0 * 114)) / 1000;
+  
+  // Apply background colour to current element
+  el.style.backgroundColor = "rgb("+ r +","+ g +","+ b +")";
+  
+  // Determine contrast of colour for element text and assign either white or black text depending
+    
+  if(Math.abs(brightness - lightText) > Math.abs(brightness - darkText)){
+    el.style.color = "rgb(255, 255, 255)";
+  } else {
+    el.style.color = "rgb(0, 0, 0)";
+  }
+};
+}
+// ** Colour Contrast Calculator ** //
 
 const twitterIcon = <FontAwesomeIcon icon={brands('twitter')} />
 
+//Redux
 const proxFrase = createSlice({
   name: 'indiceFraseAleatoria',
   initialState: {
     value: 0,
-    frases: [{frase: '"lindo dia', autor: 'yo'}, {frase: '"linda tarde', autor: 'tu'}, {frase: '"linda noche', autor: 'nosotros'}], 
-    colores: ['red', 'blue', 'black', 'green', 'yellow', 'purple', 'grey', 'orange', 'salmon', 'olive', 'violet']
+    frases: [{frase: '"La duda es uno de los nombres de la inteligencia.', autor: 'Jorge Luis Borges'}, {frase: '"La eternidad es una de las raras virtudes de la literatura.', autor: 'Adolfo Bioy Casares'}, {frase: '"La cultura es el ejercicio profundo de la identidad.', autor: 'Julio Cortázar'}],
   },
   reducers: {
     randomIndex: state => {
@@ -112,23 +134,25 @@ class MaquinaAleatoria extends React.Component {
   pulsador() {
     //conexión con la acción de Redux -->mapDispatchToProps
     this.props.submitNuevaFrase();
+    //setup();
+    coloresS();
   }
 
   //Usando jQuery
-  componentDidMount(){
-    $("h2").css("color", 'grey');
-}
+ // componentDidMount(){
+   // var contents = $('#text');
+    //contents.toUpperCase();
+//}
 
   //Renderización
   render() {
     return (
-      <div className='container-fluid'>
-       <div style={{backgroundColor:this.props.colores[this.props.value-1]}} className='textbox text-center well' id="quote-box">
-        <h1 style={{color:this.props.colores[this.props.value]}} id="text">{this.props.frases[this.props.value].frase}</h1>
+       <div className=' container text-center well' id="quote-box">
+        <h1 id="text">{this.props.frases[this.props.value].frase}</h1>
         <h2 id="author">{this.props.frases[this.props.value].autor}</h2>
+        <br />
         <button className='btn btn-block btn-primary' id="new-quote" type='Submit' onClick={this.pulsador}>Submit</button>
         <a className='btn btn-link' target="_blank" href="twitter.com/intent/tweet" id="tweet-quote">{twitterIcon}Tuitear la frase</a>
-       </div>
        </div>
     );
   }
